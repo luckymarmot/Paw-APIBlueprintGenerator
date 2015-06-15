@@ -1,4 +1,4 @@
-{spawn} = require 'child_process'
+{spawn, exec} = require 'child_process'
 {ncp} = require 'ncp'
 mkdirp = require 'mkdirp'
 fs = require 'fs'
@@ -76,8 +76,9 @@ task 'build', ->
     build()
 
 task 'test', ->
-    build () ->
-        # no test to run
+    exec './node_modules/mocha/bin/mocha --compilers coffee:coffee-script/register test.coffee', (err, output) ->
+      console.log output
+      throw err if err
 
 task 'install', ->
     build () ->

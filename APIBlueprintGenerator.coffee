@@ -1,4 +1,8 @@
-require "mustache.js"
+if typeof registerCodeGenerator != 'undefined'
+  require 'mustache.js'
+else if typeof module != 'undefined'
+  Mustache = require('mustache')
+  readFile = require('fs').readFileSync
 
 APIBlueprintGenerator = ->
 
@@ -98,4 +102,8 @@ APIBlueprintGenerator.identifier = "io.apiary.PawExtensions.APIBlueprintGenerato
 APIBlueprintGenerator.title = "API Blueprint Generator"
 APIBlueprintGenerator.fileExtension = "md"
 
-registerCodeGenerator APIBlueprintGenerator
+if typeof registerCodeGenerator != 'undefined'
+  registerCodeGenerator APIBlueprintGenerator
+else if typeof module != 'undefined'
+  module.exports = APIBlueprintGenerator
+
